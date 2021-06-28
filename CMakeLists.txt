@@ -1,5 +1,6 @@
-cmake_minimum_required(VERSION 2.8.3)
-project(gflags_catkin)
+cmake_minimum_required(VERSION 3.0)
+
+project(gflags_catkin VERSION 2.2.2 LANGUAGES CXX)
 
 find_package(catkin_simple REQUIRED)
 catkin_simple()
@@ -10,18 +11,15 @@ file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include)
 
 ExternalProject_Add(
   gflags_src
-  URL https://github.com/gflags/gflags/archive/v2.2.1.zip
-  URL_MD5 2d988ef0b50939fb50ada965dafce96b
+  URL https://github.com/gflags/gflags/archive/v2.2.2.zip
+  URL_MD5 ff856ff64757f1381f7da260f79ba79b
   UPDATE_COMMAND ""
-  CONFIGURE_COMMAND cd ../gflags_src &&
-     cmake .
+  CMAKE_ARGS
        -DCMAKE_INSTALL_PREFIX:PATH=${CATKIN_DEVEL_PREFIX}
        -DBUILD_SHARED_LIBS:BOOL=true
        -DGFLAGS_NAMESPACE:STRING=google
        -DCMAKE_BUILD_TYPE:STRING=Release
        -DCMAKE_TOOLCHAIN_FILE:STRING=${CMAKE_TOOLCHAIN_FILE}
-  BUILD_COMMAND cd ../gflags_src && make -j 8
-  INSTALL_COMMAND cd ../gflags_src && make install -j 8
 )
 
 install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/include/gflags
